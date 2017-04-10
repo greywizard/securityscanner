@@ -1,0 +1,11 @@
+{
+  "log_path": "/tmp/",
+  "geo_path": "/usr/local/share/GeoIP/",
+  "google_api_key": "xxxxx",
+  "virustotal_api_key": "xxxxx",
+  "pagespeed_api_key": "xxxxx",
+  "bot_name": "Mozilla/5.0 (compatibile; GreyWizard/2; +https://greywizard.com/en)",
+  "server_port": "1234",
+  "is_local": true,
+  "throttle": "15"
+}
