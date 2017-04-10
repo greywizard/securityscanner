@@ -9,7 +9,6 @@ import (
 	_ "github.com/greywizard/securityscanner/securityscanner/plugins/ip"
 	_ "github.com/greywizard/securityscanner/securityscanner/plugins/pagespeed"
 	_ "github.com/greywizard/securityscanner/securityscanner/plugins/ports"
-	_ "github.com/greywizard/securityscanner/securityscanner/plugins/pseudo"
 	_ "github.com/greywizard/securityscanner/securityscanner/plugins/waf"
 	// _ "github.com/greywizard/securityscanner/securityscanner/plugins/wappalyzer" // missing docker image
 )
