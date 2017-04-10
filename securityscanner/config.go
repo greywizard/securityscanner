@@ -2,7 +2,9 @@ package securityscanner
 
 import (
 	"errors"
+	"flag"
 	"fmt"
+	"os"
 
 	"github.com/spf13/viper"
 )
@@ -15,9 +17,11 @@ func LoadConfig() bool {
 		return false
 	}
 
-	viper.SetConfigName("config")
+	configPath := flag.String("config", os.Getenv("GOPATH")+"/src/github.com/greywizard/securityscanner/config/config.json", "config string path")
+	flag.Parse()
+
 	viper.SetConfigType("json")
-	viper.AddConfigPath("$GOPATH/src/github.com/greywizard/securityscanner/config")
+	viper.SetConfigFile(*configPath)
 	err := viper.ReadInConfig()
 	if err != nil {
 		panic(fmt.Errorf("Fatal error config file: %s \n", err))

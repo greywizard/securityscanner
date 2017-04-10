@@ -21,6 +21,8 @@ With plugin based structure can be easy upgraded with other rules and checks.
 
 Scanner is requiring the config file in `config\config.json` path.
 
+Config file can be overriden with `-config=/full/path/to/config.json` flag
+
 Check the [README](config/README.md) file for example config
 
 
