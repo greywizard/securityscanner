@@ -10,7 +10,7 @@ import (
 	_ "github.com/greywizard/securityscanner/securityscanner/plugins/pagespeed"
 	_ "github.com/greywizard/securityscanner/securityscanner/plugins/ports"
 	_ "github.com/greywizard/securityscanner/securityscanner/plugins/waf"
-	// _ "github.com/greywizard/securityscanner/securityscanner/plugins/wappalyzer" // missing docker image
+	_ "github.com/greywizard/securityscanner/securityscanner/plugins/wappalyzer" // missing docker image
 )
 
 func main() {
