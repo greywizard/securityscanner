@@ -63,5 +63,15 @@ Check [cmd/scanner.go](cmd/scanner.go) source code
  
 Go to [README](securityscanner/plugins/README.md) for more info
 
+# Building in docker
+
+To build program using docker image (based on [https://hub.docker.com/_/golang/](https://hub.docker.com/_/golang/)) use:
+```
+cd docker
+docker build -t golang:1.8.1-securityscanner .
+cd ..
+docker run --rm -v "$PWD":/usr/local/go/src/github.com/greywizard/securityscanner -w /usr/local/go/src/github.com/greywizard/securityscanner golang:1.8.1-securityscanner go build -v cmd/scannerServer.go
+```
+
 
  
