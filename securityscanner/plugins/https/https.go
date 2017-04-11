@@ -76,7 +76,8 @@ func (s *HttpsPlugin) Scan() (map[string]interface{}, error) {
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
-			if status, err := poddle(s.Domain); err != nil {
+			command := exec.Command("docker", "run", "--rm", "instrumentisto/nmap", "-T5", "-P0", "--script", "ssl-poodle.nse", "-p", "443", s.Domain)
+			if status, err := checkStatus("POODLE", command, s.Domain, "CVE-2014-3566"); err != nil {
 				logger.LoggerError.Error(logger.Trace(err))
 			} else {
 				mutex.Lock()
@@ -88,7 +89,9 @@ func (s *HttpsPlugin) Scan() (map[string]interface{}, error) {
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
-			if status, err := v2(s.Domain); err != nil {
+			command := exec.Command("docker", "run", "--rm", "instrumentisto/nmap", "-T5", "-P0", "--script", "sslv2.nse", "-p", "443", s.Domain)
+
+			if status, err := checkStatus("V2", command, s.Domain, "SSLv2 supported"); err != nil {
 				logger.LoggerError.Error(logger.Trace(err))
 			} else {
 				mutex.Lock()
@@ -102,65 +105,32 @@ func (s *HttpsPlugin) Scan() (map[string]interface{}, error) {
 	return value, nil
 }
 
-func poddle(domain string) (string, error) {
-	logger.LoggerDebug.Debug("[SCANNER] NMAP POODLE START: ", domain)
+func checkStatus(name string, command *exec.Cmd, domain string, expectedSring string) (color string, err error) {
+	logger.LoggerDebug.Debug("[SCANNER] HTTPS "+name+" START: ", domain)
 
 	var outW bytes.Buffer
 	envW := os.Environ()
-	cmdW := exec.Command("nmap", "-T5", "-P0", "--script", "ssl-poodle.nse", "-p", "443", domain)
-	cmdW.Env = envW
-	cmdW.Stdout = &outW
-	cmdW.Stderr = &outW
+	command.Env = envW
+	command.Stdout = &outW
+	command.Stderr = &outW
 
-	if err := cmdW.Start(); err != nil {
+	if err := command.Start(); err != nil {
 		return "", err
 	}
 	timer := time.AfterFunc(securityscanner.DefaultTimeout, func() {
 		logger.LoggerError.Error("nmap timeout")
-		_ = cmdW.Process.Kill()
+		_ = command.Process.Kill()
 	})
 	defer timer.Stop()
 
-	if err := cmdW.Wait(); err != nil {
+	if err := command.Wait(); err != nil {
 		logger.LoggerError.Error("nmap: ", outW.String())
 		return "", err
 	}
 
 	logger.LoggerDebug.Debug("[SCANNER] NMAP POODLE STOP: ", domain, outW.String())
 
-	if strings.Contains(outW.String(), "CVE-2014-3566") {
-		return securityscanner.RED, nil
-	}
-	return securityscanner.GREEN, nil
-}
-
-func v2(domain string) (string, error) {
-	logger.LoggerDebug.Debug("[SCANNER] NMAP V2 START: ", domain)
-
-	var outW bytes.Buffer
-	envW := os.Environ()
-	cmdW := exec.Command("nmap", "-T5", "-P0", "--script", "sslv2.nse", "-p", "443", domain)
-	cmdW.Env = envW
-	cmdW.Stdout = &outW
-	cmdW.Stderr = &outW
-
-	if err := cmdW.Start(); err != nil {
-		return "", err
-	}
-	timer := time.AfterFunc(securityscanner.DefaultTimeout, func() {
-		logger.LoggerError.Error("nmap timeout")
-		_ = cmdW.Process.Kill()
-	})
-	defer timer.Stop()
-
-	if err := cmdW.Wait(); err != nil {
-		logger.LoggerError.Error("nmap: ", outW.String())
-		return "", err
-	}
-
-	logger.LoggerDebug.Debug("[SCANNER] NMAP V2 STOP: ", domain, outW.String())
-
-	if strings.Contains(outW.String(), "SSLv2 supported") {
+	if strings.Contains(outW.String(), expectedSring) {
 		return securityscanner.RED, nil
 	}
 	return securityscanner.GREEN, nil

@@ -1,21 +1,65 @@
 package https
 
 import (
+	"bytes"
+	"io"
 	"testing"
 
 	"os/exec"
 
 	"github.com/greywizard/securityscanner/securityscanner"
+	"github.com/greywizard/securityscanner/securityscanner/logger"
 	"github.com/stretchr/testify/require"
 )
 
 var pluginName = "Https"
 var pluginCode = "Https"
 
-func TestNmapAvailable(t *testing.T) {
-	cmdW := exec.Command("nmap", "-v")
+func TestDockerInstalled(t *testing.T) {
+	cmdW := exec.Command("docker", "--version")
 	err := cmdW.Run()
-	require.NoError(t, err, "Nmap must be installed for this plugin")
+	require.NoError(t, err, "Docker must be installed for this plugin")
+}
+
+func TestDockerImageExists(t *testing.T) {
+	imageName := "instrumentisto/nmap"
+	imageExists := checkImage(imageName)
+	if !imageExists {
+		tryBuildImage(imageName, t)
+		logger.LoggerDebug.Debug("nmap", "docker installing")
+		imageExists = checkImage("instrumentisto/nmap")
+	}
+
+	require.True(t, imageExists, "Docker image \""+imageName+"\" is not installed\nRun .\\securityscanner\\plugins\\wappalyzer\\Dockerfile\\build.sh")
+}
+
+func checkImage(image string) bool {
+	c1 := exec.Command("docker", "images")
+	c2 := exec.Command("grep", image)
+
+	pr, pw := io.Pipe()
+	c1.Stdout = pw
+	c2.Stdin = pr
+
+	var b2 bytes.Buffer
+	c2.Stdout = &b2
+
+	c1.Start()
+	c2.Start()
+
+	go func() {
+		defer pw.Close()
+
+		c1.Wait()
+	}()
+	c2.Wait()
+	return b2.Len() > 0
+}
+
+func tryBuildImage(image string, t *testing.T) {
+	cmdW := exec.Command("docker", "image", "pull", image)
+	err := cmdW.Run()
+	require.NoError(t, err, "Error installing image ", image)
 }
 
 func TestHttpsPlugin_Scan(t *testing.T) {
@@ -25,7 +69,7 @@ func TestHttpsPlugin_Scan(t *testing.T) {
 	val, err := plugin.Scan()
 	require.NoError(t, err)
 
-	expectedKeys := []string{"https", "poodle", "drown"} //TODO
+	expectedKeys := []string{"https", "poodle", "drown"}
 
 	for _, k := range expectedKeys {
 		require.Contains(t, val, k)
@@ -48,7 +92,7 @@ func TestHttpsPlugin_Info(t *testing.T) {
 	plugin := new(HttpsPlugin)
 	val := plugin.Info()
 
-	expectedKeys := []string{"https"} //TODO
+	expectedKeys := []string{"https", "poodle", "drown"}
 
 	for _, k := range expectedKeys {
 		require.Contains(t, val, k)

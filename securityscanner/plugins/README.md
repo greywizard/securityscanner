@@ -36,7 +36,7 @@ Checks status of security headers in server response
 
 Checks security of TLS/SSL protocol.
 
-**Reqiures `nmap` installed.**
+**Reqiures `docker` installed.**
 
 ## IP
 
@@ -67,6 +67,8 @@ This plugin only check if website allows for such calls (don't use Web Applicati
 
 ## Wapalyzer
 Based on [AliasIO/Wappalyzer](https://github.com/AliasIO/Wappalyzer) uncover technologies used on webiste.
+
+**Reqiures `docker` installed.**
 
 **Requires to install Docker image `wappalyzer\grey_wizard`. Run:**
  

@@ -32,7 +32,7 @@ To check if all required fields dependent by plugins are set in configuration:
 
 ## Plugin dependencies
 
-To check if all required dependencies (like nmap, geoip databases, docker images) are installed run:
+To check if all required dependencies (like geoip databases, docker images) are installed run:
 
 `sh sh/check_dependencies.sh`
 
