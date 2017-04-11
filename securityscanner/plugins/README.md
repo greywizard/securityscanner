@@ -13,7 +13,7 @@ Each plugin is placed under separated package in separate directory.
   * [PageSpeed](#pagespeed)
   * [Ports](#ports)
   * [Waf](#waf)
-  * [Wapalyzer](#wappalyzer)
+  * [Wappalyzer](#wappalyzer)
   
 * [Skeleton of new plugin](#skeleton-of-new-plugin)
 
@@ -65,7 +65,7 @@ Checks behavior for common vulnerabilities checks like XSS, SQLinjections, execu
 
 This plugin only check if website allows for such calls (don't use Web Application Firewall - WAF). Don't check the vulnerability itself.
 
-## Wapalyzer
+## Wappalyzer
 Based on [AliasIO/Wappalyzer](https://github.com/AliasIO/Wappalyzer) uncover technologies used on webiste.
 
 **Reqiures `docker` installed.**
@@ -74,7 +74,7 @@ Based on [AliasIO/Wappalyzer](https://github.com/AliasIO/Wappalyzer) uncover tec
  
 `sh .\securityscanner\plugins\wappalyzer\Dockerfile\build.sh `
 
-# Sleleton of new plugin:
+# Skeleton of new plugin:
 
 ```
 package sample

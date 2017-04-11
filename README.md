@@ -12,9 +12,9 @@ With plugin based structure can be easy upgraded with other rules and checks.
 - [Configuration](#configuration)
 - [Plugin dependencies](#plugin-dependencies)
 - [Run as JSON RPC Server](#run-as-json-rpc-server)
-- [Running simple plugin](#run-simple-plugin)
+- [Running simple plugin](#running-simple-plugin)
 - [Plugins](#plugins)
-- [Documentation](#documentation)
+- [Building in docker](#building-in-docker)
 
 
 ## Configuration
@@ -23,7 +23,7 @@ Scanner is requiring the config file in `config\config.json` path.
 
 Config file can be overriden with `-config=/full/path/to/config.json` flag
 
-Check the [README](config/README.md) file for example config
+Check the [README](config/) file for example config
 
 
 To check if all required fields dependent by plugins are set in configuration:
@@ -61,7 +61,7 @@ Check [cmd/scanner.go](cmd/scanner.go) source code
 
 # Plugins
  
-Go to [README](securityscanner/plugins/README.md) for more info
+Go to [README](securityscanner/plugins/) for more info
 
 # Building in docker
 
