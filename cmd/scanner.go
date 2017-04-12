@@ -4,15 +4,7 @@ import (
 	"github.com/davecgh/go-spew/spew"
 	"github.com/greywizard/securityscanner/securityscanner"
 	"github.com/greywizard/securityscanner/securityscanner/logger"
-	_ "github.com/greywizard/securityscanner/securityscanner/plugins/blacklist"
-	_ "github.com/greywizard/securityscanner/securityscanner/plugins/files"
-	_ "github.com/greywizard/securityscanner/securityscanner/plugins/headers"
-	_ "github.com/greywizard/securityscanner/securityscanner/plugins/https"
-	_ "github.com/greywizard/securityscanner/securityscanner/plugins/ip"
-	_ "github.com/greywizard/securityscanner/securityscanner/plugins/pagespeed"
-	_ "github.com/greywizard/securityscanner/securityscanner/plugins/ports"
-	_ "github.com/greywizard/securityscanner/securityscanner/plugins/waf"
-	_ "github.com/greywizard/securityscanner/securityscanner/plugins/wappalyzer"
+	_ "github.com/greywizard/securityscanner/securityscanner/plugins"
 	"github.com/greywizard/securityscanner/securityscanner/translate"
 )
 
