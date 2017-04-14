@@ -53,7 +53,7 @@ Configuration keys:
 Retrieve data about page speed provided by Google PageSpeed Insights
 
 Configuration keys:
-* **google_api_key** - API Key required for Google Safe Browsing. [Get started](https://developers.google.com/speed/docs/insights/v1/getting_started).
+* **google_api_key** - API Key required for Google PageSpeed Tools. [Get started](https://developers.google.com/speed/docs/insights/v1/getting_started).
 
 ## Ports
 
