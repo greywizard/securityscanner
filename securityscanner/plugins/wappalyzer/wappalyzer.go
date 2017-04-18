@@ -116,7 +116,6 @@ func (s *WappalyzerPlugin) Scan() (map[string]interface{}, error) {
 		}
 	}
 
-	//https://github.com/r--w/Wappalyzer/tree/master/src/drivers/phantomjs
 	logger.LoggerDebug.Debug("[SCANNER] RUNNING DOCKER")
 	var outW bytes.Buffer
 	cmdW := exec.Command("docker", "run", "--rm", "wappalyzer/grey_wizard", s.Protocol+"://"+s.Domain)

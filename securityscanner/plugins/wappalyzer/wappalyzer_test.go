@@ -39,7 +39,7 @@ func TestDockerImageExists(t *testing.T) {
 	}()
 	c2.Wait()
 
-	require.NotEmpty(t, b2.Len(), "Docker image \"wappalyzer/grey_wizard\" is not installed\nRun .\\securityscanner\\plugins\\wappalyzer\\Dockerfile\\build.sh")
+	require.NotEmpty(t, b2.Len(), "Docker image \"wappalyzer/grey_wizard\" is not installed\nRun sh ./securityscanner/plugins/wappalyzer/Dockerfile/build.sh")
 }
 
 func TestWappalyzerPlugin_Scan(t *testing.T) {
