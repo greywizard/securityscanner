@@ -28,13 +28,13 @@ Check the [README](config/) file for example config
 
 To check if all required fields dependent by plugins are set in configuration:
 
-`sh sh/check_configuration.sh`
+`make check-configration`
 
 ## Plugin dependencies
 
 To check if all required dependencies (like geoip databases, docker images) are installed run:
 
-`sh sh/check_dependencies.sh`
+`make check-dependencies`
 
 ## Run as JSON RPC Server:
 
@@ -57,11 +57,24 @@ Check [cmd/scanner.go](cmd/scanner.go) source code
 
 # Running tests:
 
-`go test $(go list ./... | grep -v /vendor | grep -v /cmd)`
+`make test` run all unit tests
+
+`make test-xml` run tests with xUnit output
+
+`make test-coverage` calculate tests coverage
 
 # Plugins
  
 Go to [README](securityscanner/plugins/) for more info
+
+# Build
+
+To build using go installed in OS run:
+```
+make build
+```
+
+Output goes to `bin/` directory
 
 # Building in docker
 
