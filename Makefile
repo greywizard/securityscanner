@@ -24,7 +24,7 @@ build: ; $(info $(M) building executable…) @ ## Build program binary
 		-o bin/$(PACKAGE) cmd/scannerServer.go
 
 vendor-install : ; $(info $(M) Installing vendor packages…) @ ## Install vendor packages
-	 cd $(BASE) && govendor install +vendor,^program
+	cd $(BASE) && $(GOVENDOR) install +vendor,^program
 
 # Tools
 
@@ -53,7 +53,7 @@ $(BIN)/go2xunit: | $(BASE) ; $(info $(M) building go2xunit…)
 	$Q go get github.com/tebeka/go2xunit
 
 # Tests
-test: ; $(info $(M) running $(NAME:%=% )tests…) ## Run tests
+test: ; $(info $(M) running $(NAME:%=% )tests…) @ ## Run tests
 	$Q cd $(BASE) && $(GO) test -timeout $(TIMEOUT)s $(ARGS) $(TESTPKGS)
 
 test-xml: $(BASE) $(GO2XUNIT) ; $(info $(M) running $(NAME:%=% )tests…) @ ## Run tests with xUnit output
@@ -91,14 +91,16 @@ lint: $(BASE) $(GOLINT) ; $(info $(M) running golint…) @ ## Run golint
 
 # Checks
 check-dependencies: ; $(info $(M) Checking dependencies…) @ ## Check dependend tools
-	go test ./securityscanner/plugins/ip -run TestIpPlugin_CheckDatabase
-	go test ./securityscanner/plugins/wappalyzer -run TestDockerImageExists
-	go test ./securityscanner/plugins/https -run TestDocker*
+	cd $(BASE)
+	$(GO) test ./securityscanner/plugins/ip -run TestIpPlugin_CheckDatabase
+	$(GO) test ./securityscanner/plugins/wappalyzer -run TestDockerImageExists
+	$(GO) test ./securityscanner/plugins/https -run TestDocker*
 
 check-configuration: ; $(info $(M) Checking configuration…) @ ## Check configuration
-	go test ./securityscanner/plugins/blacklist -run TestBlacklistPlugin_Configuration
-	go test ./securityscanner/plugins/ip -run TestIpPlugin_Configuration
-	go test ./securityscanner/plugins/pagespeed -run TestPagespeedPlugin_Configuration
+	cd $(BASE)
+	$(GO) test ./securityscanner/plugins/blacklist -run TestBlacklistPlugin_Configuration
+	$(GO) test ./securityscanner/plugins/ip -run TestIpPlugin_Configuration
+	$(GO) test ./securityscanner/plugins/pagespeed -run TestPagespeedPlugin_Configuration
 
 # Misc
 .PHONY: fmt
