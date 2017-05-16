@@ -98,7 +98,7 @@ func (s *WappalyzerPlugin) Scan() (map[string]interface{}, error) {
 
 	value := map[string]interface{}{}
 
-	timeout := 15 * time.Second
+	timeout := 25 * time.Second
 	envW := os.Environ()
 	isLocal := viper.GetBool("is_local")
 	if isLocal {
