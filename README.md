@@ -28,7 +28,7 @@ Check the [README](config/) file for example config
 
 To check if all required fields dependent by plugins are set in configuration:
 
-`make check-configration`
+`make check-configuration`
 
 ## Plugin dependencies
 
