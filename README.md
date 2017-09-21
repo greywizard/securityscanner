@@ -19,7 +19,7 @@ With plugin based structure can be easy upgraded with other rules and checks.
 
 ## Configuration
 
-Scanner is requiring the config file in `config\config.json` path.
+Scanner is requiring the config file in `config/config.json` path.
 
 Config file can be overriden with `-config=/full/path/to/config.json` flag
 
